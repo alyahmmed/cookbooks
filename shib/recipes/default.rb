@@ -3,7 +3,6 @@ node[:deploy].each do |app_name, deploy|
   script "install_nothing" do
     interpreter "bash"
     user "root"
-    cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
     apt-get install curl
 	curl -k -O http://pkg.switch.ch/switchaai/SWITCHaai-swdistrib.asc
