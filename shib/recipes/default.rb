@@ -9,7 +9,7 @@ node[:deploy].each do |app_name, deploy|
 	apt-key add SWITCHaai-swdistrib.asc
 	echo 'deb http://pkg.switch.ch/switchaai/ubuntu precise main' | sudo tee /etc/apt/sources.list.d/SWITCHaai-swdistrib.list > /dev/null
 	apt-get update
-	apt-get install shibboleth
+	apt-get install -f shibboleth -y
     EOH
   end
 end
