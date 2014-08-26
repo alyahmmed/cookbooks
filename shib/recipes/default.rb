@@ -1,6 +1,6 @@
 node[:deploy].each do |app_name, deploy|
 
-  script "install_nothing" do
+  script "install_shibd" do
     interpreter "bash"
     user "root"
     code <<-EOH

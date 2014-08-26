@@ -1,11 +1,10 @@
 node[:deploy].each do |app_name, deploy|
 
-  script "install_nothing" do
+  script "deploy_clean" do
     interpreter "bash"
     user "root"
-    cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
-    mkdir shibd2
+    rm /etc/apache2/sites-available/*
     EOH
   end
 end
