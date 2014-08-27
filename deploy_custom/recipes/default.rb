@@ -13,6 +13,9 @@ node[:deploy].each do |app_name, deploy|
     sed -i "9i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
     service apache2 restart
     EOH
+  end  
+  
+  script "deploy_clean_https" do
     if node[:deploy][app_name][:ssl_support]
       interpreter "bash"
       user "root"
