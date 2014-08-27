@@ -13,7 +13,7 @@ node[:deploy].each do |app_name, deploy|
     sed -i "9i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
     service apache2 restart
     EOH
-    if deploy[:ssl_support]
+    if node[:deploy][app_name][:ssl_support]
       code <<-EOH
       sed -i "69i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
       sed -i "69i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
