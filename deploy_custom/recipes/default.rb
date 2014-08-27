@@ -11,6 +11,7 @@ node[:deploy].each do |app_name, deploy|
     sed -i "9i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
     sed -i "9i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
     sed -i "9i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+    service apache2 restart
     EOH
     if node[:deploy][app_name][:ssl_support]
       code <<-EOH
@@ -19,10 +20,8 @@ node[:deploy].each do |app_name, deploy|
       sed -i "69i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
       sed -i "69i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
       sed -i "69i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+      service apache2 restart
       EOH
     end
-    code <<-EOH
-    service apache2 restart
-    EOH
   end
 end
