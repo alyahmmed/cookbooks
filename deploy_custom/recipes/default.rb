@@ -14,6 +14,8 @@ node[:deploy].each do |app_name, deploy|
     service apache2 restart
     EOH
     if node[:deploy][app_name][:ssl_support]
+      interpreter "bash"
+      user "root"
       code <<-EOH
       sed -i "69i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
       sed -i "69i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
