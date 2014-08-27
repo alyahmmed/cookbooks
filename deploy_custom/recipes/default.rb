@@ -6,7 +6,7 @@ node[:deploy].each do |app_name, deploy|
     interpreter "bash"
     user "root"
     code <<-EOH
-    rm /etc/apache2/sites-available/*
+    echo "#{app_name} #{app_name} #{app_name}"
     EOH
   end
 end
