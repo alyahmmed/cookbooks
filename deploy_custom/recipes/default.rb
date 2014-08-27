@@ -6,7 +6,8 @@ node[:deploy].each do |app_name, deploy|
     interpreter "bash"
     user "root"
     code <<-EOH
-    sed -i "9i ShibUseEnvironment On" /etc/apache2/sites-available/#{app_name}.conf
+    sed -i "9i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+    service apache2 restart
     EOH
   end
 end
