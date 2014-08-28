@@ -17,4 +17,13 @@ node[:deploy].each do |app_name, deploy|
 		source 'ssl.cert.erb'
 		path "/etc/shibboleth/sp-cert.pem"
 	end
+	
+	script "deploy_shibd" do
+		interpreter "bash"
+		user "root"
+		code <<-EOH
+		sudo service apache2 restart
+		sudo service shibd restart
+	    	EOH
+	end
 end
