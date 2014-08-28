@@ -14,7 +14,7 @@ https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPConfiguration
 
     <!-- The entityID is the name TestShib made for your SP. -->
     <ApplicationDefaults entityID="<%= @entityid %>"
-        REMOTE_USER="eppn">
+        homeURL="<%= @homeurl %>" REMOTE_USER="eppn">
 
         <!-- You should use secure cookies if at all possible.  See cookieProps in this Wiki article. -->
         <!-- https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPSessions -->
