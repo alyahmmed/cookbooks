@@ -3,8 +3,8 @@
 # Attributes:: default
 #
 
-default["shib"]["entityid"] = "https://" + node['ipaddress']
-default["shib"]["homeurl"] = "https://" + node['ipaddress']
+default["shib"]["entityid"] = "https://" + node[:opsworks][:instance][:ip]
+default["shib"]["homeurl"] = "https://" + node[:opsworks][:instance][:ip]
 default["shib"]["sp_ssl_key"] = "sp-key.pem"
 default["shib"]["sp_ssl_cert"] = "sp-cert.pem"
 
