@@ -5,12 +5,13 @@ node[:deploy].each do |app_name, deploy|
 	script "deploy_clean" do
 		interpreter "bash"
 		user "root"
+		line = 10
 		code <<-EOH
-		sed -i "10i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "10i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "10i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "10i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "10i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "#{line}i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "#{line}i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "#{line}i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "#{line}i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "#{line}i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
 		service apache2 restart
 		EOH
 	end  
@@ -19,12 +20,13 @@ node[:deploy].each do |app_name, deploy|
 		if node[:deploy][app_name][:ssl_support]
 			interpreter "bash"
 			user "root"
+			line = 71
 			code <<-EOH
-			sed -i "70i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "70i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "70i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "70i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "70i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "#{line}i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "#{line}i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "#{line}i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "#{line}i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "#{line}i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
 			service apache2 restart
 			EOH
 		end
