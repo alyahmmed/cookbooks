@@ -6,11 +6,11 @@ node[:deploy].each do |app_name, deploy|
 		interpreter "bash"
 		user "root"
 		code <<-EOH
-		sed -i "9i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "9i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "9i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "9i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "9i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "10i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "10i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "10i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "10i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
+		sed -i "10i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
 		service apache2 restart
 		EOH
 	end  
@@ -20,11 +20,11 @@ node[:deploy].each do |app_name, deploy|
 			interpreter "bash"
 			user "root"
 			code <<-EOH
-			sed -i "69i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "69i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "69i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "69i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "69i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "70i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "70i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "70i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "70i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
+			sed -i "70i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
 			service apache2 restart
 			EOH
 		end
