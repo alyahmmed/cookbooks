@@ -4,7 +4,7 @@ node[:deploy].each do |app_name, deploy|
 	interpreter "bash"
 	user "root"
 	code <<-EOH
-	mdkir /srv/www/#{app_name}/current/tmp/time
+	mkdir /srv/www/#{app_name}/current/tmp/time
 	chmod 777 /srv/www/#{app_name}/current/tmp/time
 	EOH
   end 
