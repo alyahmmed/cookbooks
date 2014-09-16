@@ -5,12 +5,12 @@ node[:deploy].each do |app_name, deploy|
 	command "wget -q http://#{node[:opsworks][:instance][:ip]}/welcome?index_users"
   end
   
-  cron "index_users" do
+  cron "index_curations" do
 	minute "*/5"
 	command "wget -q http://#{node[:opsworks][:instance][:ip]}/welcome?index_curations"
   end
   
-  cron "index_users" do
+  cron "optimize_index" do
 	minute "*/12"
 	command "wget -q http://#{node[:opsworks][:instance][:ip]}/welcome?optimize_index"
   end
