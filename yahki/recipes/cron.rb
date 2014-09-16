@@ -1,16 +1,17 @@
 node[:deploy].each do |app_name, deploy|
-  
-  script "cron_clean" do
-	interpreter "bash"
-	user "root"
-	code <<-EOH
-	mkdir /srv/www/#{app_name}/current/tmp/time
-	chmod 777 /srv/www/#{app_name}/current/tmp/time
-	EOH
-  end 
 
-  cron "job_name" do
+  cron "index_users" do
 	minute "*/5"
-	command "cd /srv/www/#{app_name}/current/tmp/time && touch $RANDOM"
+	command "wget -q http://#{node[:opsworks][:instance][:ip]}/welcome?index_users"
+  end
+  
+  cron "index_users" do
+	minute "*/5"
+	command "wget -q http://#{node[:opsworks][:instance][:ip]}/welcome?index_curations"
+  end
+  
+  cron "index_users" do
+	minute "*/12"
+	command "wget -q http://#{node[:opsworks][:instance][:ip]}/welcome?optimize_index"
   end
 end
