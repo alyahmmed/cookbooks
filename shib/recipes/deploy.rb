@@ -6,12 +6,14 @@ node[:deploy].each do |app_name, deploy|
 		interpreter "bash"
 		user "root"
 		line = 10
+		sed_line = line - 2
+		vhost = "/etc/apache2/sites-available/#{app_name}.conf"
 		code <<-EOH
-		sed -i "#{line}i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "#{line}i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "#{line}i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "#{line}i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
-		sed -i "#{line}i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+		if ! sed -n '#{sed_line},$p' #{vhost} | grep "ShibUseHeaders On" #{vhost} ; then sed -i "#{line}i ShibUseHeaders On" #{vhost} ; fi ;
+		if ! sed -n '#{sed_line},$p' #{vhost} | grep "SetHandler shib" #{vhost} ; then sed -i "#{line}i SetHandler shib" #{vhost} ; fi ;
+		if ! sed -n '#{sed_line},$p' #{vhost} | grep "Require shibboleth" #{vhost} ; then sed -i "#{line}i Require shibboleth" #{vhost} ; fi ;
+		if ! sed -n '#{sed_line},$p' #{vhost} | grep "ShibRequireSession Off" #{vhost} ; then sed -i "#{line}i ShibRequireSession Off" #{vhost} ; fi ;
+		if ! sed -n '#{sed_line},$p' #{vhost} | grep "AuthType shibboleth" #{vhost} ; then sed -i "#{line}i AuthType shibboleth" #{vhost} ; fi ;
 		service apache2 restart
 		EOH
 	end  
@@ -21,12 +23,14 @@ node[:deploy].each do |app_name, deploy|
 			interpreter "bash"
 			user "root"
 			line = 71
+			sed_line = line - 2
+			vhost = "/etc/apache2/sites-available/#{app_name}.conf"
 			code <<-EOH
-			sed -i "#{line}i ShibUseHeaders On" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "#{line}i SetHandler shib" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "#{line}i Require shibboleth" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "#{line}i ShibRequireSession Off" /etc/apache2/sites-available/#{app_name}.conf
-			sed -i "#{line}i AuthType shibboleth" /etc/apache2/sites-available/#{app_name}.conf
+			if ! sed -n '#{sed_line},$p' #{vhost} | grep "ShibUseHeaders On" #{vhost} ; then sed -i "#{line}i ShibUseHeaders On" #{vhost} ; fi ;
+			if ! sed -n '#{sed_line},$p' #{vhost} | grep "SetHandler shib" #{vhost} ; then sed -i "#{line}i SetHandler shib" #{vhost} ; fi ;
+			if ! sed -n '#{sed_line},$p' #{vhost} | grep "Require shibboleth" #{vhost} ; then sed -i "#{line}i Require shibboleth" #{vhost} ; fi ;
+			if ! sed -n '#{sed_line},$p' #{vhost} | grep "ShibRequireSession Off" #{vhost} ; then sed -i "#{line}i ShibRequireSession Off" #{vhost} ; fi ;
+			if ! sed -n '#{sed_line},$p' #{vhost} | grep "AuthType shibboleth" #{vhost} ; then sed -i "#{line}i AuthType shibboleth" #{vhost} ; fi ;
 			service apache2 restart
 			EOH
 		end
