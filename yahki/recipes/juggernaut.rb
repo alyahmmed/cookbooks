@@ -19,8 +19,8 @@ node[:deploy].each do |app_name, deploy|
     interpreter "bash"
     user "root"
     code <<-EOH
-    redis-server
-    juggernaut
+    redis-server &
+    juggernaut &
     EOH
   end
 end
