@@ -31,7 +31,7 @@ node[:deploy].each do |app_name, deploy|
     id -u juggernaut &>/dev/null || adduser --system --no-create-home --disabled-login --disabled-password --group juggernaut
     chmod +x /etc/init.d/juggernaut
     update-rc.d -f juggernaut defaults &>/dev/null
-    service juggernaut start
+    service juggernaut restart
     EOH
   end
 end
