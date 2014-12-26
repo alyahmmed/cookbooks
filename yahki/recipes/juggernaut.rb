@@ -13,4 +13,25 @@ node[:deploy].each do |app_name, deploy|
     npm install -g juggernaut
     EOH
   end
+
+  template "juggernaut_init" do
+    source "juggernaut.init.erb"
+    path "/etc/init.d/juggernaut"
+  end
+
+  template "juggernaut_conf" do
+    source "juggernaut.conf.erb"
+    path "/etc/init/juggernaut.conf"
+  end
+
+  script "juggernaut_service" do
+    interpreter "bash"
+    user "root"
+    code <<-EOH
+    adduser --system --no-create-home --disabled-login --disabled-password --group juggernaut
+    chmod +x /etc/init.d/juggernaut
+    update-rc.d -f juggernaut defaults
+    service juggernaut start
+    EOH
+  end
 end
