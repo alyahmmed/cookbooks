@@ -35,27 +35,27 @@ node[:deploy].each do |app_name, deploy|
     EOH
   end
 
-  template "juggernaut-rails" do
-    source "juggernaut-rails.erb"
-    path "/usr/local/bin/juggernaut-rails"
+  template "juggernaut-yahki" do
+    source "juggernaut-yahki.erb"
+    path "/usr/local/bin/juggernaut-yahki"
   end
 
-  template "juggernaut-rails_init" do
-    source "juggernaut-rails.init.erb"
-    path "/etc/init.d/juggernaut-rails"
+  template "juggernaut-yahki_init" do
+    source "juggernaut-yahki.init.erb"
+    path "/etc/init.d/juggernaut-yahki"
   end
 
-  template "juggernaut-rails_conf" do
-    source "juggernaut-rails.conf.erb"
-    path "/etc/init/juggernaut-rails.conf"
+  template "juggernaut-yahki_conf" do
+    source "juggernaut-yahki.conf.erb"
+    path "/etc/init/juggernaut-yahki.conf"
   end
 
-  script "juggernaut-rails_service" do
+  script "juggernaut-yahki_service" do
     interpreter "bash"
     user "root"
     code <<-EOH
-    id -u juggernaut-rails &>/dev/null || adduser --system --no-create-home --disabled-login --disabled-password --group juggernaut-rails
-    chmod +x /etc/init.d/juggernaut-rails
+    id -u juggernaut-yahki &>/dev/null || adduser --system --no-create-home --disabled-login --disabled-password --group juggernaut-yahki
+    chmod +x /etc/init.d/juggernaut-yahki
     update-rc.d -f juggernaut-rails defaults &>/dev/null
     EOH
   end
