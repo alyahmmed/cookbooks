@@ -22,7 +22,7 @@ node[:deploy].each do |app_name, deploy|
 		if node[:deploy][app_name][:ssl_support]
 			interpreter "bash"
 			user "root"
-			line = 71
+			line = 72
 			sed_line = line - 2
 			vhost = "/etc/apache2/sites-available/#{app_name}.conf"
 			code <<-EOH
