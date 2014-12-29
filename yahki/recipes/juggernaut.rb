@@ -49,14 +49,4 @@ node[:deploy].each do |app_name, deploy|
     source "juggernaut-yahki.conf.erb"
     path "/etc/init/juggernaut-yahki.conf"
   end
-
-  script "juggernaut-yahki_service" do
-    interpreter "bash"
-    user "root"
-    code <<-EOH
-    id -u juggernaut-yahki &>/dev/null || adduser --system --no-create-home --disabled-login --disabled-password --group juggernaut-yahki
-    chmod +x /etc/init.d/juggernaut-yahki
-    update-rc.d -f juggernaut-rails defaults &>/dev/null
-    EOH
-  end
 end
