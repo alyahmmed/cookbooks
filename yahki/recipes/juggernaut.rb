@@ -1,9 +1,51 @@
 node[:deploy].each do |app_name, deploy|
 
-  %w{redis-server nodejs npm}.each do |pkg|
+  %w{nodejs npm}.each do |pkg|
   	package pkg do
   	end
   end
+
+  #################
+  # Redis service
+  #################
+
+  script "install_redis2.8" do
+    interpreter "bash"
+    user "root"
+    code <<-EOH
+    mkdir /opt/redis && cd /opt/redis
+    wget http://download.redis.io/releases/redis-2.8.19.tar.gz
+    tar xzf redis-2.8.19.tar.gz && cd redis-2.8.19 && make
+    ln -fs /opt/redis/redis-2.8.19/src/redis-server /usr/bin/redis-server
+    ln -fs /opt/redis/redis-2.8.19/src/redis-cli /usr/bin/redis-cli
+    cp -f /opt/redis/redis-2.8.19/redis.conf /etc/redis/redis.conf
+    EOH
+  end
+
+  template "redis_init" do
+    source "redis.init.erb"
+    path "/etc/init.d/redis-server"
+  end
+
+  template "redis_conf" do
+    source "redis.conf.erb"
+    path "/etc/init/redis-server.conf"
+  end
+
+  script "redis_service" do
+    interpreter "bash"
+    user "root"
+    code <<-EOH
+    id -u redis &>/dev/null || adduser --system --no-create-home --disabled-login --disabled-password --group redis
+    chmod +x /etc/init.d/redis-server
+    update-rc.d -f redis-server defaults &>/dev/null
+    service redis-server restart
+    EOH
+  end
+
+  #################
+  # Juggernaut service
+  #################
 
   script "install_juggernaut" do
     interpreter "bash"
@@ -34,6 +76,10 @@ node[:deploy].each do |app_name, deploy|
     service juggernaut restart
     EOH
   end
+
+  #################
+  # Juggernaut Yahki listener service
+  #################
 
   template "juggernaut-yahki" do
     source "juggernaut-yahki.erb"

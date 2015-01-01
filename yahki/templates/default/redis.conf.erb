@@ -1,0 +1,9 @@
+start on filesystem and started networking
+stop on shutdown
+
+script
+    # We found $HOME is needed. Without it, we ran into problems
+    export HOME="/root"
+
+    exec /usr/bin/redis-server 2>&1 >> /var/log/redis-server.log
+end script
