@@ -18,6 +18,7 @@ node[:deploy].each do |app_name, deploy|
     tar xzf redis-2.8.19.tar.gz && cd redis-2.8.19 && make
     ln -fs /opt/redis/redis-2.8.19/src/redis-server /usr/bin/redis-server
     ln -fs /opt/redis/redis-2.8.19/src/redis-cli /usr/bin/redis-cli
+    mkdir ­p /etc/redis >& /dev/null
     cp -f /opt/redis/redis-2.8.19/redis.conf /etc/redis/redis.conf
     EOH
   end
