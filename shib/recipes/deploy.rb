@@ -11,6 +11,7 @@ node[:deploy].each do |application, deploy_item|
       shib_arr = ['AuthType shibboleth', 'ShibRequireSession Off', 'Require shibboleth',
         'SetHandler shib', 'ShibUseHeaders On']
       Chef::Log.debug("document root: #{deploy_item[:absolute_document_root]}")
+      Chef::Log.debug("file: #{vhost_file}")
       Chef::Log.debug("file exxists: #{File.exist?(vhost_file) ? 'yes' : 'no'}")
 
       if File.exist?(vhost_file)      
@@ -29,6 +30,7 @@ node[:deploy].each do |application, deploy_item|
         end
       end
       File.open(vhost_file, 'w') { |file| file.write(out_file) }
+      Chef::Log.debug("file content: #{out_file}")
       code <<-EOH
       echo ''
       EOH
