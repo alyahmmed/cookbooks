@@ -15,22 +15,21 @@ node[:deploy].each do |application, deploy_item|
 
       if File.exist?(vhost_file)      
         read_file = File.open(vhost_file, 'r').read
-        out_file = File.open(vhost_file, 'w')
+        out_file = ''
         prev_line = ''
         read_file.each_line do |line|
           if prev_line.include?(dir_tag) && ! line.include?(shib_arr[0])
             shib_arr.each do |shib_line|
-              out_file.print "    #{shib_line}\n"
+              out_file += "    #{shib_line}\n"
             end
-            out_file.print "    #######\n"
+            out_file += "    #######\n"
           end
-          out_file.print line
+          out_file += line
           prev_line = line
         end
-        out_file.close
       end
       code <<-EOH
-      echo "shib::deploy done!"
+      echo #{out_file} > #{vhost_file}
       EOH
     end
   end
