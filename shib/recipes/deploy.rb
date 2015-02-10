@@ -37,6 +37,12 @@ node[:deploy].each do |application, deploy_item|
     end
   end
 
+  template "vhost_file" do
+    source "initial.erb"
+    path "/etc/apache2/sites-available/#{application}2.conf"
+    variables({:content => 'abc'})
+  end
+
   template "shibboleth2" do
     source "shibboleth2.xml.erb"
     path "/etc/shibboleth/shibboleth2.xml"
