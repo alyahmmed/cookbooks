@@ -27,6 +27,9 @@ node[:deploy].each do |application, deploy_item|
         end
         out_file.close
       end
+      code <<-EOH
+      echo "shib::deploy done!"
+      EOH
     end
   end
 
