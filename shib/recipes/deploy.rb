@@ -28,8 +28,9 @@ node[:deploy].each do |application, deploy_item|
           prev_line = line
         end
       end
+      File.open(vhost_file, 'w') { |file| file.write(out_file) }
       code <<-EOH
-      echo #{out_file} > #{vhost_file}
+      echo ''
       EOH
     end
   end
