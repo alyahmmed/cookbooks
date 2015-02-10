@@ -10,6 +10,8 @@ node[:deploy].each do |application, deploy_item|
       dir_tag = "<Directory #{deploy_item[:absolute_document_root]}>"
       shib_arr = ['AuthType shibboleth', 'ShibRequireSession Off', 'Require shibboleth',
         'SetHandler shib', 'ShibUseHeaders On']
+      Chef::Log.debug("document root: #{deploy_item[:absolute_document_root]}")
+      Chef::Log.debug("file exxists: #{File.exist?(vhost_file) ? 'yes' : 'no'}")
 
       if File.exist?(vhost_file)      
         read_file = File.open(vhost_file, 'r').read
