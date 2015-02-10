@@ -6,15 +6,12 @@ node[:deploy].each do |application, deploy_item|
     template "vhost_file" do
       source "initial.erb"
       path "/etc/apache2/sites-available/#{application}.conf"
-
+      # apply shib changes
       vhost_file = "/etc/apache2/sites-available/#{application}.conf"
       dir_tag = "<Directory #{deploy_item[:absolute_document_root]}>"
       shib_arr = ['AuthType shibboleth', 'ShibRequireSession Off', 'Require shibboleth',
         'SetHandler shib', 'ShibUseHeaders On']
-      Chef::Log.debug("document root: #{deploy_item[:absolute_document_root]}")
-      Chef::Log.debug("file: #{vhost_file}")
-      Chef::Log.debug("file exxists: #{File.exist?(vhost_file) ? 'yes' : 'no'}")
-
+      Chef::Log.debug("shib deploy to vhost file: #{vhost_file}")
       if File.exist?(vhost_file)      
         read_file = File.open(vhost_file, 'r').read
         out_file = ''
@@ -30,11 +27,9 @@ node[:deploy].each do |application, deploy_item|
           prev_line = line
         end
       end
-      File.open(vhost_file, 'w') { |file| file.write(out_file) }
-      Chef::Log.debug("file content: #{out_file}")
-      out_file
-
+      # call the template
       variables({:content => out_file})
+      Chef::Log.debug("shib deploy done: #{vhost_file}")
     end
   end
 
