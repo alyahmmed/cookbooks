@@ -79,15 +79,6 @@ node[:deploy].each do |app_name, deploy|
   end
 
   #################
-  # Rails gem for Juggernaut Yahki listener service
-  #################
-
-  gem_package 'rails' do
-    options("-v 3.2.0")
-    action :install
-  end
-
-  #################
   # Juggernaut Yahki listener service
   #################
 
