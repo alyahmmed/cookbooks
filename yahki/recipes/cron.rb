@@ -11,7 +11,7 @@ node[:deploy].each do |app_name, deploy|
   end
   
   cron "optimize_index" do
-	minute "*/12"
+	hour "*/12"
 	command "wget -O ./cron_job.txt -q http://#{node[:opsworks][:instance][:ip]}/optimize_index"
   end
 end
